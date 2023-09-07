@@ -21,7 +21,7 @@ class DisplayPassword(plugins.Plugin):
     __version__ = '1.0.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to display recently cracked passwords'
-    
+        
     def __init__(self):
     self.peers_detected = False
     
@@ -75,10 +75,10 @@ class DisplayPassword(plugins.Plugin):
         ui.set('display-password',
                     "%s" % (os.popen(last_line).read().rstrip()))
 
-# Called when a new peer is detected
-def on_peer_detected(self, agent, peer):
-    self.peers_detected = True
+    # Called when a new peer is detected
+    def on_peer_detected(self, agent, peer):
+        self.peers_detected = True
 
-# Called when a known peer is lost
-def on_peer_lost(self, agent, peer):
-    self.peers_detected = False
+    # Called when a known peer is lost
+    def on_peer_lost(self, agent, peer):
+        self.peers_detected = False
