@@ -64,11 +64,9 @@ class DisplayPassword(plugins.Plugin):
 
     def on_ui_update(self, ui):
         if self.peers_detected:
-        # Hide the UI element when peers are detected
-        ui.hide_element('display-password')
-    else:
-        # Display the UI element if no peers are detected
-        ui.show_element('display-password')
+            ui.hide_element('display-password')
+        else:
+            ui.show_element('display-password')
 
         
         last_line = 'tail -n 1 /root/handshakes/wpa-sec.cracked.potfile | awk -F: \'{print $3 " - " $4}\''
