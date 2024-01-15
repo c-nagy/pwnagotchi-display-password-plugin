@@ -23,7 +23,7 @@ class DisplayPassword(plugins.Plugin):
     __description__ = 'A plugin to display recently cracked passwords'
         
     def __init__(self):
-    self.peers_detected = False
+        self.peers_detected = False
     
     def on_loaded(self):
         logging.info("display-password loaded")
