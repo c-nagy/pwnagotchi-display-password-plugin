@@ -80,3 +80,4 @@ class DisplayPassword(plugins.Plugin):
     # Called when a known peer is lost
     def on_peer_lost(self, agent, peer):
         self.peers_detected = False
+        ui.show_element('display-password')
