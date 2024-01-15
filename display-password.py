@@ -21,7 +21,10 @@ class DisplayPassword(plugins.Plugin):
     __version__ = '1.0.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to display recently cracked passwords'
-
+        
+    def __init__(self):
+        self.peers_detected = False
+    
     def on_loaded(self):
         logging.info("display-password loaded")
 
@@ -60,6 +63,21 @@ class DisplayPassword(plugins.Plugin):
             ui.remove_element('display-password')
 
     def on_ui_update(self, ui):
+        if self.peers_detected:
+            ui.hide_element('display-password')
+        else:
+            ui.show_element('display-password')
+
+        
         last_line = 'tail -n 1 /root/handshakes/wpa-sec.cracked.potfile | awk -F: \'{print $3 " - " $4}\''
         ui.set('display-password',
                     "%s" % (os.popen(last_line).read().rstrip()))
+
+    # Called when a new peer is detected
+    def on_peer_detected(self, agent, peer):
+        self.peers_detected = True
+
+    # Called when a known peer is lost
+    def on_peer_lost(self, agent, peer):
+        self.peers_detected = False
+        ui.show_element('display-password')
