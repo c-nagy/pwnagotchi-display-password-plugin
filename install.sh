@@ -3,7 +3,6 @@
 set -e
 
 CONFIG_FILE="/etc/pwnagotchi/config.toml"
-CONFIG_FILE="config.toml"
 
 function user_sleep() {
 	sleep 0.5
