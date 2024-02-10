@@ -64,6 +64,7 @@ fi
 if [ -z "$installation_dir" ]; then
 	installation_dir="/usr/local/share/pwnagotchi/custom_plugins"
 fi
+installation_dir=${installation_dir//\"/}
 echo "[ + ] Creating symbolic link to ${installation_dir}"
 ln -sf "$(pwd)/display-password.py" "${installation_dir}/display-password.py"
 
