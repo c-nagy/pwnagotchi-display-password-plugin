@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-INSTALLATION_DIRECTORY="/usr/local/share/pwnagotchi/custom-plugins"
 CONFIG_FILE="/etc/pwnagotchi/config.toml"
 
 function user_sleep() {
@@ -56,8 +55,18 @@ if [ "$EUID" -ne 0 ]; then
 	echo "[ ! ] This script need to be run as root"
 	exit 0
 fi
-echo "[ + ] Creating symbolic link to ${INSTALLATION_DIRECTORY}"
-ln -sf "$(pwd)/display-password.py" "${INSTALLATION_DIRECTORY}/display-password.py"
+
+installation_dir=$(awk '/^main.custom_plugins = / {print $3}' "$CONFIG_FILE")
+if [ -z "$installation_dir" ]; then
+	echo "[ ! ] The installation directory was not found in the configuration file"
+	read -r -p "Please enter the installation directory: [/usr/local/share/custom_plugins]" installation_dir
+fi
+if [ -z "$installation_dir" ]; then
+	installation_dir="/usr/local/share/custom_plugins"
+fi
+echo "[ + ] Creating symbolic link to ${installation_dir}"
+ln -sf "$(pwd)/display-password.py" "${installation_dir}/display-password.py"
+
 echo "[ + ] Backing up configuration files..."
 cp "${CONFIG_FILE}" "${CONFIG_FILE}.bak"
 read -r -p "Do you want the horizontal or vertical orientation? [H/v] " orientation
