@@ -61,13 +61,13 @@ ln -sf "$(pwd)/display-password.py" "${INSTALLATION_DIRECTORY}/display-password.
 echo "[ + ] Backing up configuration files..."
 cp "${CONFIG_FILE}" "${CONFIG_FILE}.bak"
 read -r -p "Do you want the horizontal or vertical orientation? [H/v] " orientation
-if [ "$orientation" = "v" ]; then
+if [ "${orientation^^}" = "V" ]; then
 	orientation="vertical"
 else
 	orientation="horizontal"
 fi
 echo "[ ~ ] Modifying configuration files..."
-modify_config_files orientation
+modify_config_files $orientation
 echo "[ * ] Done! Please restart your pwnagotchi daemon to apply changes"
 echo "[ * ] You can do so with"
 echo "[ > ] sudo systemctl restart pwnagotchi"
