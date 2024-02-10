@@ -27,8 +27,14 @@ function edit_configuration_values() {
 	# Escape slashes and dots in the value to avoid issues with sed
 	value=$(echo "$value" | sed 's/\//\\\//g')
 	value=$(echo "$value" | sed 's/\./\\\./g')
-	# Use sed to insert or replace the configuration value
-	sed -i "/^${key}/c ${key} = \"${value}\"" "$config_file"
+	# If the value is true, replace it with the lowercase version and without quotes
+	if [ "$value" = "true" ]; then
+		sed -i "s/^${key} = .*/${key} = ${value}/" "$config_file"
+	else
+		# Use sed to insert or replace the configuration value
+		sed -i "/^${key}/c ${key} = \"${value}\"" "$config_file"
+	fi
+
 }
 
 function modify_config_files() {
