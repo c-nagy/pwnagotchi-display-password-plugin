@@ -59,10 +59,10 @@ fi
 installation_dir=$(awk '/^main.custom_plugins = / {print $3}' "$CONFIG_FILE")
 if [ -z "$installation_dir" ]; then
 	echo "[ ! ] The installation directory was not found in the configuration file"
-	read -r -p "Please enter the installation directory: [/usr/local/share/custom_plugins]" installation_dir
+	read -r -p "Please enter the installation directory: [/usr/local/share/pwnagotchi/custom_plugins]" installation_dir
 fi
 if [ -z "$installation_dir" ]; then
-	installation_dir="/usr/local/share/custom_plugins"
+	installation_dir="/usr/local/share/pwnagotchi/custom_plugins"
 fi
 echo "[ + ] Creating symbolic link to ${installation_dir}"
 ln -sf "$(pwd)/display-password.py" "${installation_dir}/display-password.py"
