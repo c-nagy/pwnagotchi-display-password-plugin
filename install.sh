@@ -38,13 +38,14 @@ function edit_configuration_values() {
 }
 
 function modify_config_files() {
+	orientation="$1"
 	# TODO If you know a simple method to write on toml files, please submit a change
 	check_toml_key_exists "main.plugins.display-password.enabled" "$CONFIG_FILE"
 	check_toml_key_exists "main.plugins.display-password.orientation" "$CONFIG_FILE"
 
 	# Set the configuration values
 	edit_configuration_values "main.plugins.display-password.enabled" true "$CONFIG_FILE"
-	edit_configuration_values "main.plugins.display-password.orientation" "horizontal" "$CONFIG_FILE"
+	edit_configuration_values "main.plugins.display-password.orientation" "$orientation" "$CONFIG_FILE"
 }
 
 # Main
@@ -59,8 +60,14 @@ echo "[ + ] Creating symbolic link to ${INSTALLATION_DIRECTORY}"
 ln -sf "$(pwd)/display-password.py" "${INSTALLATION_DIRECTORY}/display-password.py"
 echo "[ + ] Backing up configuration files..."
 cp "${CONFIG_FILE}" "${CONFIG_FILE}.bak"
+read -r -p "Do you want the horizontal or vertical orientation? [H/v] " orientation
+if [ "$orientation" = "v" ]; then
+	orientation="vertical"
+else
+	orientation="horizontal"
+fi
 echo "[ ~ ] Modifying configuration files..."
-modify_config_files
+modify_config_files orientation
 echo "[ * ] Done! Please restart your pwnagotchi daemon to apply changes"
 echo "[ * ] You can do so with"
 echo "[ > ] sudo systemctl restart pwnagotchi"
