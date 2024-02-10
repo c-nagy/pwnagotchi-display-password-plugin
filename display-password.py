@@ -40,30 +40,20 @@ class DisplayPassword(plugins.Plugin):
                 v_pos = (180, 61)
 
             if self.options["orientation"] == "vertical":
-                ui.add_element(
-                    "display-password",
-                    LabeledValue(
-                        color=BLACK,
-                        label="",
-                        value="",
-                        position=v_pos,
-                        label_font=fonts.Bold,
-                        text_font=fonts.Small,
-                    ),
-                )
+                selected_position = v_pos
             else:
-                # default to horizontal
-                ui.add_element(
-                    "display-password",
-                    LabeledValue(
-                        color=BLACK,
-                        label="",
-                        value="",
-                        position=h_pos,
-                        label_font=fonts.Bold,
-                        text_font=fonts.Small,
-                    ),
-                )
+                selected_position = h_pos
+            ui.add_element(
+                "display-password",
+                LabeledValue(
+                    color=BLACK,
+                    label="",
+                    value="",
+                    position=selected_position,
+                    label_font=fonts.Bold,
+                    text_font=fonts.Small,
+                ),
+            )
         except Exception as e:
             logging.error(f"[DISPLAY-PASSWORD] {e}")
 
