@@ -15,7 +15,7 @@ function check_toml_key_exists() {
 		echo "The '$key' already exists on $config_file."
 	else
 		echo "Creating '$key' on $config_file."
-		echo "${key} = \"test\" " >>"$config_file"
+		echo "${key} = true " >>"$config_file"
 	fi
 }
 
@@ -43,12 +43,16 @@ function modify_config_files() {
 
 # Main
 
-echo "[ ~ ] We may need sudo permissions..."
-sleep 0.5
+# Check that the script is running as root
+
+if [ "$EUID" -ne 0 ]; then
+	echo "[ ! ] This script need to be run as root"
+	exit 0
+fi
 echo "[ + ] Creating symbolic link to ${INSTALLATION_DIRECTORY}"
-sudo ln -sf "$(pwd)/display-password.py" "${INSTALLATION_DIRECTORY}/display-password.py"
+ln -sf "$(pwd)/display-password.py" "${INSTALLATION_DIRECTORY}/display-password.py"
 echo "[ + ] Backing up configuration files..."
-sudo cp "${CONFIG_FILE}" "${CONFIG_FILE}.bak"
+cp "${CONFIG_FILE}" "${CONFIG_FILE}.bak"
 echo "[ ~ ] Modifying configuration files..."
 modify_config_files
 echo "[ * ] Done! Please restart your pwnagotchi daemon to apply changes"
