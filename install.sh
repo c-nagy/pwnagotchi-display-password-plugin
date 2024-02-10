@@ -37,8 +37,8 @@ function modify_config_files() {
 	check_toml_key_exists "main.plugins.display-password.orientation" "$CONFIG_FILE"
 
 	# Set the configuration values
-	edit_configuration_values "main.plugins.display-password.enabled" "$CONFIG_FILE"
-	edit_configuration_values "main.plugins.display-password.orientation" "$CONFIG_FILE"
+	edit_configuration_values "main.plugins.display-password.enabled" true "$CONFIG_FILE"
+	edit_configuration_values "main.plugins.display-password.orientation" "horizontal" "$CONFIG_FILE"
 }
 
 # Main
