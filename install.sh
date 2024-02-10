@@ -57,11 +57,11 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 installation_dir=$(awk '/^main.custom_plugins = / {print $3}' "$CONFIG_FILE")
-if [ -z "$installation_dir" ]; then
+if [ -z "${installation_dir//\"}" ]; then
 	echo "[ ! ] The installation directory was not found in the configuration file"
 	read -r -p "Please enter the installation directory: [/usr/local/share/pwnagotchi/custom_plugins]" installation_dir
 fi
-if [ -z "$installation_dir" ]; then
+if [ -z "${installation_dir//\"}" ]; then
 	installation_dir="/usr/local/share/pwnagotchi/custom_plugins"
 fi
 installation_dir=${installation_dir//\"/}
