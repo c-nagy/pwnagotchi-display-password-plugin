@@ -17,19 +17,9 @@ class DisplayPassword(plugins.Plugin):
 
     def on_ui_setup(self, ui):
         try:
-<<<<<<< Updated upstream
-            if self.options["position_x"] and self.options["position_y"]:
-                h_pos = self.options["h_pos"].split(",")
-                v_pos = self.options["v_pos"].split(",")
-||||||| Stash base
-            if self.options["position_x"] and self.options["position_y"]:
-                h_pos = (self.options["position_x"], self.options["position_y"])
-                v_pos = (self.options["position_x"], self.options["position_y"])
-=======
             if self.options["h_pos"] or self.options["v_pos"]:
                 h_pos = self.options["h_pos"].split(",")
                 v_pos = self.options["v_pos"].split(",")
->>>>>>> Stashed changes
             elif ui.is_waveshare_v2():
                 h_pos = (0, 95)
                 v_pos = (180, 61)
