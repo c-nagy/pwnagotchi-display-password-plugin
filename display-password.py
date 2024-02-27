@@ -17,7 +17,10 @@ class DisplayPassword(plugins.Plugin):
 
     def on_ui_setup(self, ui):
         try:
-            if ui.is_waveshare_v2():
+            if self.options["position_x"] and self.options["position_y"]:
+                h_pos = (self.options["position_x"], self.options["position_y"])
+                v_pos = (self.options["position_x"], self.options["position_y"])
+            elif ui.is_waveshare_v2():
                 h_pos = (0, 95)
                 v_pos = (180, 61)
             elif ui.is_waveshare_v1():
