@@ -17,10 +17,7 @@ class DisplayPassword(plugins.Plugin):
 
     def on_ui_setup(self, ui):
         try:
-            if self.options["h_pos"] or self.options["v_pos"]:
-                h_pos = self.options["h_pos"].split(",")
-                v_pos = self.options["v_pos"].split(",")
-            elif ui.is_waveshare_v2():
+            if ui.is_waveshare_v2():
                 h_pos = (0, 95)
                 v_pos = (180, 61)
             elif ui.is_waveshare_v1():
@@ -46,6 +43,16 @@ class DisplayPassword(plugins.Plugin):
                 selected_position = v_pos
             else:
                 selected_position = h_pos
+
+            if self.options["position"]:
+                try:
+                    position_values = str(self.options["position"]).split(",")
+                    position_x = int(position_values[0])
+                    position_y = int(position_values[1])
+                    selected_position = (position_x, position_y)
+                except Exception as e:
+                    logging.error(f"Error reading configuration: {e}")
+
             ui.add_element(
                 "display-password",
                 LabeledValue(
@@ -72,7 +79,7 @@ class DisplayPassword(plugins.Plugin):
         try:
             for file in os.listdir("/root/handshakes"):
                 if file.endswith(".potfile"):
-                    with open(f'/root/handshakes/{file}', 'r') as file:
+                    with open(f"/root/handshakes/{file}", "r") as file:
                         lines = file.readlines()
                         if len(lines) > 0:
                             last_line = lines[-1].split(":")[2:]
