@@ -1,4 +1,4 @@
-# display-password shows recently cracked passwords on the pwnagotchi display 
+# display-password shows recently cracked passwords on the pwnagotchi display
 #
 #
 ###############################################################
@@ -26,24 +26,8 @@ class DisplayPassword(plugins.Plugin):
         logging.info("display-password loaded")
 
     def on_ui_setup(self, ui):
-        if ui.is_waveshare_v2():
-            h_pos = (0, 95)
-            v_pos = (180, 61)
-        elif ui.is_waveshare_v1():
-            h_pos = (0, 95)
-            v_pos = (170, 61)
-        elif ui.is_waveshare144lcd():
-            h_pos = (0, 92)
-            v_pos = (78, 67)
-        elif ui.is_inky():
-            h_pos = (0, 83)
-            v_pos = (165, 54)
-        elif ui.is_waveshare27inch():
-            h_pos = (0, 153)
-            v_pos = (216, 122)
-        else:
-            h_pos = (0, 91)
-            v_pos = (180, 61)
+        h_pos = (self.options['h_pos_x'], self.options['h_pos_y'])
+        v_pos = (self.options['v_pos_x'], self.options['v_pos_y'])
 
         if self.options['orientation'] == "vertical":
             ui.add_element('display-password', LabeledValue(color=BLACK, label='', value='',
